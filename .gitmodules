@@ -1,0 +1,6 @@
+[submodule "expose-db"]
+	path = expose-db
+	url = https://github.com/muonTelescope/expose-db.git
+[submodule "layout"]
+	path = layout
+	url = https://github.com/muonTelescope/layout.git

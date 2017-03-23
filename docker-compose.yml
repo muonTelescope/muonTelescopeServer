@@ -1,0 +1,40 @@
+version: "2"
+
+services:
+  nginx:
+    build:
+      context: ./layout
+      dockerfile: x86.Dockerfile
+    logging:
+      driver: "none"
+    volumes:
+      - ./layout:/usr/share/nginx/html:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - expose-db
+
+  expose-db:
+    build: 
+      context: ./expose-db
+      dockerfile: x86.Dockerfile
+    volumes:
+      - ./expose-db:/usr/src/app:rw
+    ports:
+      - "5858:5858"
+    links:
+      - db
+
+  db:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=cosmicRoot
+      - MYSQL_DATABASE=cosmic
+      - MYSQL_USER=cosmic
+      - MYSQL_PASSWORD=cosmicUser
+    volumes:
+      - ../db:/var/lib/mysql:rw
+    ports: 
+      - "3306:3306"
+
