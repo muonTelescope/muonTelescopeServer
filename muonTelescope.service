@@ -1,0 +1,14 @@
+[Unit]
+Description=Cosmic Network containers
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker start -a redis_server
+docker-compose --file arm.docker-compose.yml up
+docker-compose --file arm.docker-compose.yml stop
+ExecStop=/usr/bin/docker stop -t 2 redis_server
+
+[Install]
+WantedBy=default.target
